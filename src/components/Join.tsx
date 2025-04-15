@@ -4,6 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaWallet } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useState } from "react";
+import emailSubmission from "../assets/Join/emailSubmissoin.gif";
 
 export const Join = () => {
   const [isEmailOpened, setIsEmailOpened] = useState(false);
@@ -44,29 +45,29 @@ export const Join = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 100 }}
               transition={{
-              duration: 1.5,
-              delay: 0.2,
-              ease: "backInOut",
-              type: "spring",
+                duration: 1.5,
+                delay: 0.2,
+                ease: "backInOut",
+                type: "spring",
               }}
               className="relative max-w-[700px] mx-auto grid grid-cols-1 text-white md:mt-36 py-10"
             >
               <button
-              onClick={() => setIsEmailOpened(false)}
-              className="absolute top-1/2 left-5 text-3xl"
+                onClick={() => setIsEmailOpened(false)}
+                className="absolute top-[-90px] md:top-1/2 left-[-25px] md:left-5 text-3xl"
               >
-              {"<"}
+                {"<"}
               </button>
               <div className="flex flex-col items-center">
-              <h3 className="text-start text-xl">Email</h3>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-2/3 p-2 rounded-lg text-black"
-              />
-              <button className="w-1/4 mx-auto mt-5 bg-[#ff8d5d] text-black py-2 px-6 rounded-lg font-bold">
-                Submit
-              </button>
+                <h3 className="text-start text-xl">Email</h3>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-2/3 p-2 rounded-lg md:text-xl text-black"
+                />
+                <button className="w-1/4 mx-auto mt-5 bg-[#ff8d5d] text-black py-2 md:px-6 rounded-lg font-bold">
+                  Submit
+                </button>
               </div>
             </motion.div>
           ) : (
@@ -126,8 +127,16 @@ export const Join = () => {
           )}
         </div>
         <div className="md:w-1/2 md:min-h-[700px]">
-          <img
-            src={joinP}
+          <motion.img
+            key={isEmailOpened ? "joinP" : "emailSubmission"}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: 1.5,
+              ease: "easeInOut",
+            }}
+            src={isEmailOpened ? joinP : emailSubmission}
             alt="join_P"
             className="w-full h-full object-cover max-sm:rounded-t-xl md:rounded-tr-xl md:rounded-br-xl"
           />
