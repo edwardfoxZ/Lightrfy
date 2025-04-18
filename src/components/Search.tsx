@@ -28,7 +28,10 @@ export const Search = ({ isSearchOpen, setIsSearchOpend }: any) => {
           />
         )}
         <motion.button
-          onClick={() => setIsSearchOpend(!isSearchOpen)}
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsSearchOpend(!isSearchOpen);
+          }}
           className="absolute right-4 top-3 bg-transparent"
           whileHover={{ scale: 1.2 }}
           whileTap={{ scale: 0.9 }}
