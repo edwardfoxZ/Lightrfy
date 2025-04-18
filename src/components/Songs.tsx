@@ -3,11 +3,13 @@ import { Footer } from "./FooterMobile";
 import { useState } from "react";
 import { Search } from "./Search";
 import { PlayerSong } from "./PlayerSong";
+import { FaPlay, FaPause } from "react-icons/fa";
 
 const Songs = () => {
   const [isSearchOpen, setIsSearchOpend] = useState(false);
   const [isLibraryOn, setIsLibraryOn] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
+  const [isMute, setIsMute] = useState(false);
 
   return (
     <div className="w-full h-full md:p-3 md:pb-48 pt-5">
@@ -30,10 +32,18 @@ const Songs = () => {
               className="relative cursor-pointer w-[130px] min-h-[130px] md:min-h-[230px] md:w-[230px]
            bg-[#191515]/50 md:rounded-xl group"
             >
+              {/* Layer */}
               <div
                 className="absolute top-0 bg-transparent group-hover:bg-[#111111]/50 w-full h-full 
-              md:rounded-xl transition-colors duration-300"
-              ></div>
+              md:rounded-xl transition-colors duration-300 flex items-center justify-center"
+              >
+                <button
+                  className="hidden md:block absolute bottom-5 right-3 opacity-0 group-hover:opacity-100 bg-[#8f364e] text-white p-3 md:p-4 
+                    rounded-full transition-opacity duration-300"
+                >
+                  <FaPlay size={20} />
+                </button>
+              </div>
               <img
                 className="w-full h-full object-fill md:rounded-xl"
                 src="https://cdn.dribbble.com/userupload/7193851/file/original-568e704bac2a87138f4dd6b7213184c6.png?resize=752x&vertical=center"
@@ -43,7 +53,12 @@ const Songs = () => {
           </div>
         </div>
       </div>
-      <PlayerSong isPlay={isPlay} setIsPlay={setIsPlay} />
+      <PlayerSong
+        isPlay={isPlay}
+        setIsPlay={setIsPlay}
+        isMute={isMute}
+        setIsMute={setIsMute}
+      />
       <Footer />
     </div>
   );

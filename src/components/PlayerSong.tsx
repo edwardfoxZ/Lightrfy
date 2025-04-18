@@ -2,7 +2,7 @@ import { FaPlay, FaPause } from "react-icons/fa";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { VscUnmute, VscMute } from "react-icons/vsc";
 
-export const PlayerSong = ({ isPlay, setIsPlay }: any) => {
+export const PlayerSong = ({ isPlay, setIsPlay, isMute, setIsMute }: any) => {
   return (
     <div className="fixed w-full bottom-[70px] md:bottom-3 bg-[#8f364e] rounded-md md:bg-transparent z-50">
       <div className="relative flex flex-row items-center justify-between py-3 px-5">
@@ -43,7 +43,9 @@ export const PlayerSong = ({ isPlay, setIsPlay }: any) => {
 
         <div className="hidden md:block pr-10">
           <div className="flex flex-row items-center">
-            <VscMute size={20} />
+            <button className="text-white" onClick={() => setIsMute(!isMute)}>
+              {isMute ? <VscMute size={20} /> : <VscUnmute size={20} />}
+            </button>
             <h2>-----------</h2>
           </div>
         </div>
