@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+h1 {
+  @apply text-5xl md:text-7xl text-[#8f364e];
+}
+
+h2 {
+  @apply text-[#8f364e];
+}
+
+h3 {
+  @apply text-[#8f364e];
+}
+
+ul {
+  @apply text-[#8f364e];
+}
+
+li {
+  @apply text-[#8f364e];
+}
+
+p {
+  @apply text-[#8f364e];
+}
+
+img {
+  @apply draggble-false;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #191515;
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}

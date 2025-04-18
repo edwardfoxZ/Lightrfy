@@ -11,7 +11,6 @@ import "./index.css";
 import App from "./App.tsx";
 import { Main } from "./components/Main.tsx";
 import { Join } from "./components/Join.tsx";
-// import Songs from "./components/Songs.tsx";
 import { Page } from "./components/Page.tsx";
 
 const router = createBrowserRouter(

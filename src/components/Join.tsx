@@ -33,7 +33,7 @@ export const Join = () => {
               ease: "backInOut",
               type: "spring",
             }}
-            className="font-bold pt-8 pl-10 text-white text-4xl md:text-5xl"
+            className="font-bold pt-8 pl-10 text-4xl md:text-5xl"
           >
             Join Waitlist
           </motion.h2>
@@ -50,7 +50,7 @@ export const Join = () => {
                 ease: "backInOut",
                 type: "spring",
               }}
-              className="relative max-w-[700px] mx-auto grid grid-cols-1 text-white md:mt-36 py-10"
+              className="relative max-w-[700px] mx-auto grid grid-cols-1 md:mt-36 py-10"
             >
               <button
                 onClick={() => setIsEmailOpened(false)}
@@ -80,7 +80,7 @@ export const Join = () => {
                 ease: "backInOut",
                 type: "spring",
               }}
-              className="flex flex-col items-center space-y-5 text-white md:mt-36 py-10"
+              className="flex flex-col items-center space-y-5 md:mt-36 py-10"
             >
               <button
                 className="flex items-center justify-center gap-1 md:text-xl font-bold bg-white 
@@ -115,7 +115,7 @@ export const Join = () => {
               <button
                 onClick={() => setIsEmailOpened(true)}
                 className="flex items-center justify-center gap-1 md:text-xl font-bold bg-[#6c6c6c]
-                     text-white py-2 w-2/3 rounded-xl"
+                    py-2 w-2/3 rounded-xl"
               >
                 <MdEmail
                   size={window.innerWidth <= 721 ? 18 : 25}
