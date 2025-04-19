@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { FaPlay, FaPause } from "react-icons/fa";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { VscUnmute, VscMute } from "react-icons/vsc";
+import { IoMdAddCircleOutline } from "react-icons/io";
+
 // import { motion } from "framer-motion";
 
 export const PlayerSong = ({ isPlay, setIsPlay, isMute, setIsMute }: any) => {
@@ -18,21 +20,30 @@ export const PlayerSong = ({ isPlay, setIsPlay, isMute, setIsMute }: any) => {
     }
   }, [valueSong]);
 
+  useEffect(() => {
+    const percent = (valueSound / 100) * 100;
+    if (progressSoundRef.current) {
+      progressSoundRef.current.style.width = `${percent}%`;
+    }
+  }, [valueSound]);
+
   return (
     <div className="fixed w-full bottom-[70px] md:bottom-3 bg-[#8f364e] rounded-md md:bg-transparent z-50">
       <div className="relative flex flex-row items-center justify-between py-3 px-5">
         <div className="flex flex-row">
-          <div className="flex flex-row space-x-2 items-center">
+          <div className="flex flex-row space-x-3 items-center">
             <img
               className="object-cover w-[45px] md:w-[80px] md:rounded-sm"
               src="https://i.etsystatic.com/36277573/r/il/32b696/5675418143/il_600x600.5675418143_rxe1.jpg"
               alt=""
             />
-            <div>
-              <h2 className="text-black">name</h2>
-              <p className="text-black">detail</p>
+            <div className="-space-y-1 md:-space-y-0">
+              <h2 className="text-white/70 font-bold">name</h2>
+              <p className="text-white/30">detail</p>
             </div>
-            <button className="hidden md:block">+</button>
+            <button className="hidden md:block font-bold text-2xl text-white/50">
+              <IoMdAddCircleOutline />
+            </button>
           </div>
         </div>
 
@@ -54,8 +65,9 @@ export const PlayerSong = ({ isPlay, setIsPlay, isMute, setIsMute }: any) => {
               <MdSkipNext size={30} className="hidden md:block text-white/60" />
             </button>
           </div>
+          {/* Song Range Large */}
           <div
-            className="relative max-sm:absolute max-sm:bottom-[-18px] left-1 pt-4 pb-3 w-full  
+            className="relative hidden md:block max-sm:absolute max-sm:bottom-[-18px] left-1 pb-3 w-full  
               md:w-auto"
           >
             <input
@@ -74,17 +86,19 @@ export const PlayerSong = ({ isPlay, setIsPlay, isMute, setIsMute }: any) => {
                     transition-colors duration-300 peer-hover:block"
             ></div>
           </div>
+
+          {/* Song Range Mobile */}
         </div>
 
-        <div className="hidden relative md:flex pr-10">
-          <div className="flex flex-row items-center space-x-2">
-            <button className="text-white" onClick={() => setIsMute(!isMute)}>
-              {isMute ? (
-                <VscMute size={18} onClick={() => setValueSong(valueSong)} />
-              ) : (
-                <VscUnmute size={19} onClick={() => setValueSound(0)} />
-              )}
-            </button>
+        <div className="hidden md:flex pr-10 space-x-2">
+          <button className="text-white" onClick={() => setIsMute(!isMute)}>
+            {isMute ? (
+              <VscMute size={19} onClick={() => setValueSound(80)} />
+            ) : (
+              <VscUnmute size={19} onClick={() => setValueSound(0)} />
+            )}
+          </button>
+          <div className="relative flex flex-row items-center space-x-2">
             <input
               id="soundRange"
               max="100"
@@ -92,13 +106,13 @@ export const PlayerSong = ({ isPlay, setIsPlay, isMute, setIsMute }: any) => {
               onChange={(e) => setValueSound(Number(e.target.value))}
               value={valueSound}
               type="range"
-              className="hidden md:block w-[90px] h-1 bg-gray-300 rounded-lg appearance-none
+              className="hidden md:block w-[90px] h-1.5 bg-gray-300 rounded-lg appearance-none
                  cursor-pointer peer thumb-on-hover"
             />
             <div
               ref={progressSoundRef}
-              className="absolute bottom-[0px] left-2 h-1.5 bg-[#8f364e] rounded-lg pointer-events-none 
-                    transition-colors duration-300 peer-hover:block"
+              className="absolute bottom-[7px] left-[-8px] h-1.5 bg-[#8f364e] rounded-lg pointer-events-none 
+                    transition-all duration-300"
             ></div>
           </div>
         </div>
