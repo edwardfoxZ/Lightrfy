@@ -1,5 +1,5 @@
-import { Nav } from "./Nav";
-import Songs from "./Songs";
+import { Nav } from "../components/Nav";
+import Songs from "../pages/Songs";
 
 export const Page = () => {
   return (

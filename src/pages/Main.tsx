@@ -14,12 +14,13 @@ export const Main = () => {
         initial={{ opacity: 1, x: 0 }}
         animate={isJoin ? { opacity: 0, x: -100 } : { opacity: 1, x: 3 }}
         transition={{ duration: 0.3, ease: "backInOut" }}
-        className="text-white space-y-6 mt-40"
+        className="space-y-6 mt-40"
       >
-        <h1 className="md:w-1/4 font-bold">Time to recreate!</h1>
-        <h2 className="text-xl md:text-4xl">Join the waitlist</h2>
+        <h1 className="md:w-1/4 font-bold text-white">Time to recreate!</h1>
+        <h2 className="text-xl md:text-4xl text-white">Join the waitlist</h2>
         <Link
-          className="inline-flex bg-[#8f364e] shadow-[0_0_15px_#8f364e] p-3 px-5 rounded-xl font-bold hover:shadow-[0_0_0px_#8f364e] transition-shadow duration-300"
+          className="inline-flex text-white bg-[#8f364e] shadow-[0_0_15px_#8f364e] p-3 px-5
+               rounded-xl font-bold hover:shadow-[0_0_0px_#8f364e] transition-shadow duration-300"
           onClick={() => setIsJoin(true)}
           to="/join-waitlist"
         >

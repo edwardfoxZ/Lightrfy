@@ -51,3 +51,37 @@ body {
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+/* Hide thumb by default */
+.thumb-on-hover::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 0;
+  width: 0;
+  background: transparent;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.thumb-on-hover:hover::-webkit-slider-thumb {
+  height: 16px;
+  width: 16px;
+  background: #8f364e;
+  border-radius: 9999px;
+}
+
+/* Firefox */
+.thumb-on-hover::-moz-range-thumb {
+  height: 0;
+  width: 0;
+  background: transparent;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.thumb-on-hover:hover::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  background: #cb6683;
+  border-radius: 9999px;
+}

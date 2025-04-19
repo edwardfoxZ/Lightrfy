@@ -1,8 +1,8 @@
-import Library from "./Library";
-import { Footer } from "./FooterMobile";
+import Library from "../components/Library";
+import { Footer } from "../components/FooterMobile";
 import { useState } from "react";
-import { Search } from "./Search";
-import { PlayerSong } from "./PlayerSong";
+import { Search } from "../components/Search";
+import { PlayerSong } from "../components/PlayerSong";
 import { FaPlay, FaPause } from "react-icons/fa";
 
 const Songs = () => {

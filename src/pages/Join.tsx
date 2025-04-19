@@ -33,7 +33,7 @@ export const Join = () => {
               ease: "backInOut",
               type: "spring",
             }}
-            className="font-bold pt-8 pl-10 text-4xl md:text-5xl"
+            className="font-bold pt-8 pl-10 text-4xl text-white md:text-5xl"
           >
             Join Waitlist
           </motion.h2>
@@ -54,7 +54,7 @@ export const Join = () => {
             >
               <button
                 onClick={() => setIsEmailOpened(false)}
-                className="absolute top-[-90px] md:top-1/2 left-[-25px] md:left-5 text-3xl"
+                className="absolute text-white top-[-90px] md:top-1/2 left-[-25px] md:left-5 text-3xl"
               >
                 {"<"}
               </button>
