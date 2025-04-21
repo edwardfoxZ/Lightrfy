@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Search } from "../components/Search";
 import { PlayerSong } from "../components/PlayerSong";
 import { FaPlay, FaPause } from "react-icons/fa";
+import Metadata from "../../server/metadata.json";
 
 const Songs = () => {
   const [isSearchOpen, setIsSearchOpend] = useState(false);
@@ -46,7 +47,7 @@ const Songs = () => {
               </div>
               <img
                 className="w-full h-full object-fill md:rounded-xl"
-                src="https://cdn.dribbble.com/userupload/7193851/file/original-568e704bac2a87138f4dd6b7213184c6.png?resize=752x&vertical=center"
+                src=""
                 alt=""
               />
             </div>
