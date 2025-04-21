@@ -12,6 +12,7 @@ import App from "./App.tsx";
 import { Main } from "./pages/Main.tsx";
 import { Join } from "./pages/Join.tsx";
 import { Page } from "./pages/Page.tsx";
+import Upload from "./server/upload.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
       <Route index element={<Main />} />
       <Route path="/join-waitlist" element={<Join />} />
       <Route path="/lightr-songs-user" element={<Page />} />
+      <Route path="/upload-songs/user" element={<Upload />} />
     </Route>
   )
 );

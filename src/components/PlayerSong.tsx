@@ -111,8 +111,7 @@ export const PlayerSong = ({ isPlay, setIsPlay, isMute, setIsMute }: any) => {
             />
             <div
               ref={progressSoundRef}
-              className="absolute bottom-[7px] left-[-8px] h-1.5 bg-[#8f364e] rounded-lg pointer-events-none 
-                    transition-all duration-300"
+              className="absolute bottom-[7px] left-[-8px] h-1.5 bg-[#8f364e] rounded-lg pointer-events-none"
             ></div>
           </div>
         </div>
