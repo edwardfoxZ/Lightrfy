@@ -11,6 +11,22 @@ const Songs = () => {
   const [isLibraryOn, setIsLibraryOn] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
   const [isMute, setIsMute] = useState(false);
+  interface Song {
+    ipfs_url: string;
+    image_url: string;
+    title: string;
+  }
+
+  const [song, setSong] = useState<Song | null>(null);
+
+  function togglePlaySong(data: any) {
+    if (song?.ipfs_url === data.ipfs_url && isPlay) {
+      setIsPlay(false);
+    } else {
+      setSong(data);
+      setIsPlay(true);
+    }
+  }
 
   return (
     <div className="w-full h-full md:p-3 md:pb-48 pt-5">
@@ -28,29 +44,38 @@ const Songs = () => {
           />
 
           <h1 className="max-sm:text-2xl text-3xl font-bold mt-10">Popular</h1>
-          <div className="flex flex-row overflow-hidden mt-5">
-            <div
-              className="relative cursor-pointer w-[130px] min-h-[130px] md:min-h-[230px] md:w-[230px]
-           bg-[#191515]/50 md:rounded-xl group"
-            >
-              {/* Layer */}
+          <div className="md:max-w-[1500px] mx-auto grid grid-cols-3 md:flex md:flex-wrap gap-5 overflow-hidden mt-5">
+            {Metadata.map((data, index) => (
               <div
-                className="absolute top-0 bg-transparent group-hover:bg-[#111111]/50 w-full h-full 
-              md:rounded-xl transition-colors duration-300 flex items-center justify-center"
+                key={index}
+                className="relative cursor-pointer bg-[#191515]/50 md:rounded-xl group"
               >
-                <button
-                  className="hidden md:block absolute bottom-5 right-3 opacity-0 group-hover:opacity-100 bg-[#8f364e] text-white p-3 md:p-4 
-                    rounded-full transition-opacity duration-300"
+                {/* Layer */}
+                <div
+                  className="absolute top-0 bg-transparent group-hover:bg-[#111111]/50 w-full h-full 
+              md:rounded-xl transition-colors duration-300 flex items-center justify-center"
                 >
-                  <FaPlay size={20} />
-                </button>
+                  <button
+                    onClick={() => togglePlaySong(data)}
+                    className="hidden md:block absolute bottom-5 right-3 opacity-0 group-hover:opacity-100 bg-[#8f364e] text-white p-3 md:p-4 
+                    rounded-full transition-opacity duration-300"
+                  >
+                    {isPlay && song?.ipfs_url === data.ipfs_url ? (
+                      <FaPause size={20} />
+                    ) : (
+                      <FaPlay size={20} />
+                    )}
+                  </button>
+                </div>
+                <div className="w-[120px] md:w-[250px]">
+                  <img
+                    className="w-full h-full object-cover md:rounded-xl"
+                    src={data.image_url}
+                    alt={data.title}
+                  />
+                </div>
               </div>
-              <img
-                className="w-full h-full object-fill md:rounded-xl"
-                src=""
-                alt=""
-              />
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -59,6 +84,7 @@ const Songs = () => {
         setIsPlay={setIsPlay}
         isMute={isMute}
         setIsMute={setIsMute}
+        song={song}
       />
       <Footer />
     </div>
