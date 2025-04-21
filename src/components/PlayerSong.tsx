@@ -193,7 +193,7 @@ export const PlayerSong = ({
             />
             <div
               ref={progressSongRef}
-              className="absolute bottom-[18px] left-0 h-1.5 bg-white/50 md:bg-[#8f364e] rounded-lg pointer-events-none 
+              className="absolute bottom-[18px] left-0 h-1.5  md:bg-[#8f364e] rounded-lg pointer-events-none 
                     transition-colors duration-300 peer-hover:block"
             ></div>
           </div>
