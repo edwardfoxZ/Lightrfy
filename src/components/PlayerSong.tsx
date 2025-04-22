@@ -175,8 +175,8 @@ export const PlayerSong = ({
           </div>
           {/* Song Range Large */}
           <div
-            className="relative hidden md:block max-sm:absolute max-sm:bottom-[-18px] left-1 pb-3 w-full  
-              md:w-auto"
+            className="relative max-sm:absolute max-sm:bottom-[-18px] left-0 pb-3 
+               max-sm:pointer-events-none w-full md:w-auto"
           >
             <h4 className="absolute left-[-40px] top-1 font-medium text-sm text-[#8f364e]">{`${Math.floor(
               currentTime / 60
@@ -184,7 +184,7 @@ export const PlayerSong = ({
             <input
               id="musicRange"
               type="range"
-              className="peer w-[650px] h-1.5 bg-[#c4647e] md:bg-gray-300 rounded-lg appearance-none
+              className="peer w-[650px] h-1 md:h-1.5 bg-[#c4647e] md:bg-gray-300 rounded-lg appearance-none
                  cursor-pointer thumb-on-hover"
               min="0"
               max="100"
@@ -193,32 +193,7 @@ export const PlayerSong = ({
             />
             <div
               ref={progressSongRef}
-              className="absolute bottom-[18px] left-0 h-1.5  md:bg-[#8f364e] rounded-lg pointer-events-none 
-                    transition-colors duration-300 peer-hover:block"
-            ></div>
-          </div>
-
-          {/* Song Range Mobile */}
-          <div
-            className="relative md:hidden max-sm:absolute max-sm:bottom-[-18px] left-0 pb-3 w-full  
-              pointer-events-none md:w-auto"
-          >
-            <h4 className="absolute left-[-40px] top-1 font-medium text-sm text-[#8f364e]">{`${Math.floor(
-              currentTime / 60
-            )}:${String(Math.floor(currentTime % 60)).padStart(2, "0")}`}</h4>
-            <input
-              id="musicRange"
-              type="range"
-              className="peer w-[650px] h-1 bg-[#c4647e] md:bg-gray-300 rounded-lg appearance-none
-                 cursor-pointer thumb-on-hover"
-              min="0"
-              max="100"
-              value={valueSong}
-              onChange={(e) => handleSeek(Number(e.target.value))}
-            />
-            <div
-              ref={progressSongRef}
-              className="absolute bottom-[18px] left-0 h-1 bg-white/50 md:bg-[#8f364e] rounded-lg pointer-events-none 
+              className="absolute bottom-[18px] left-0 h-1 md:h-1.5 bg-white/50 md:bg-[#8f364e] rounded-lg pointer-events-none 
                     transition-colors duration-300 peer-hover:block"
             ></div>
           </div>

@@ -5,9 +5,11 @@ import { FaApple, FaWallet } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useState } from "react";
 import emailSubmission from "../assets/Join/emailSubmissoin.gif";
+import { useAppKit } from "@reown/appkit/react";
 
 export const Join = () => {
   const [isEmailOpened, setIsEmailOpened] = useState(false);
+  const { open, close } = useAppKit();
 
   return (
     <div className="max-w-[1270px] max-sm:px-10 py-32 mx-auto">
@@ -103,6 +105,7 @@ export const Join = () => {
                 Apple
               </button>
               <button
+                onClick={() => open()}
                 className="flex items-center justify-center gap-1 md:text-xl font-bold bg-[#ff8d5d]
                      text-black py-2 w-2/3 rounded-xl"
               >

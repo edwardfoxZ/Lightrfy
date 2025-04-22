@@ -6,13 +6,14 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
-
 import "./index.css";
+import { AppKitProvider } from "./AppKitProvider";
+
 import App from "./App.tsx";
 import { Main } from "./pages/Main.tsx";
 import { Join } from "./pages/Join.tsx";
 import { Page } from "./pages/Page.tsx";
-import Upload from "./server/upload.tsx";
+import Upload from "./server/Upload.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +28,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AppKitProvider>
+      <RouterProvider router={router} />
+    </AppKitProvider>
   </StrictMode>
 );
