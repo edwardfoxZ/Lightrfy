@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { FaPlay, FaPause } from "react-icons/fa";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { VscUnmute, VscMute } from "react-icons/vsc";
-import { IoMdAddCircleOutline } from "react-icons/io";
+import { IoMdAddCircleOutline, IoIosArrowDropup } from "react-icons/io";
+import { useBoard } from "../hooks/setBoard";
 
 export const PlayerSong = ({
   isPlay,
@@ -20,38 +21,44 @@ export const PlayerSong = ({
   const [currentTime, setCurrentTime] = useState(0);
   const [_, setSound] = useState(0);
   const [lastVolume, setLastVolume] = useState(100);
+  const { setIsBoard, isBoard } = useBoard();
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Set ranges in useEffects
   useEffect(() => {
+    if (!song) return;
+
     const audio = audioRef.current;
 
     if (!audio) return;
 
     const onLoadedMetaData = () => {
-      setDuration(audio.duration);
+      setDuration(audio?.duration || 0);
     };
 
     const onTimeUpdata = () => {
-      setCurrentTime(audio.currentTime);
-      const percent = (audio.currentTime / audio.duration) * 100;
-      setValueSong(percent || 0);
+      if (audio) {
+        setCurrentTime(audio.currentTime);
+        const percent = (audio.currentTime / audio.duration) * 100;
+        setValueSong(percent || 0);
+      }
     };
 
-    audio.addEventListener("loadedmetadata", onLoadedMetaData);
-    audio.addEventListener("timeupdate", onTimeUpdata);
+    audio?.addEventListener("loadedmetadata", onLoadedMetaData);
+    audio?.addEventListener("timeupdate", onTimeUpdata);
 
     return () => {
-      audio.removeEventListener("loadedmetadata", onLoadedMetaData);
-      audio.removeEventListener("timeupdate", onTimeUpdata);
+      audio?.removeEventListener("loadedmetadata", onLoadedMetaData);
+      audio?.removeEventListener("timeupdate", onTimeUpdata);
     };
   }, [song]);
 
   const handleSeek = (value: number) => {
-    if (audioRef.current && duration) {
+    const audio = audioRef.current;
+    if (audio && duration) {
       const seekTime = (value / 100) * duration;
-      audioRef.current.currentTime = seekTime;
+      audio.currentTime = seekTime;
     }
     setValueSong(value);
   };
@@ -123,20 +130,45 @@ export const PlayerSong = ({
     }
   }, [isPlay, isMute, song]);
 
+  const handleBoard = () => {
+    if (isBoard) {
+      setIsBoard(false);
+    }
+  };
+
+  useEffect(() => {
+    console.log("isBoard state changed:", isBoard);
+  }, [isBoard]);
   return (
     <div className="fixed w-full bottom-[70px] md:bottom-3 bg-[#8f364e] rounded-md md:bg-transparent z-50">
       <div className="relative flex flex-row items-center justify-between py-3 px-5">
         <div className="flex flex-row">
           <div className="flex flex-row space-x-3 items-center">
-            <img
-              className="object-cover w-[45px] md:w-[80px] md:rounded-sm"
-              src={
-                song
-                  ? song.image_url
-                  : "https://i.iheart.com/v3/url/aHR0cCUzQSUyRiUyRmltYWdlLmloZWFydC5jb20lMkZpaHItaW5nZXN0aW9uLXBpcGVsaW5lLXByb2R1Y3Rpb24ta2RtJTJGS0RNMjAyMzEyMTUxMjQwMjQlMkY4ODA5ODkwODg5NzMxJTJGcmVzb3VyY2VzJTJGMWU0NjFlOGFmZTI1MWE0YTNmOGVjYWVmN2JiNWExNGYuanBn?ops=fit(480,480)"
-              }
-              alt={song ? song.title : "song_lightr"}
-            />
+            <div className="relative hover:bg-black/60">
+              {song && (
+                <div className="absolute top-0 right-0 text-white/70">
+                  <button
+                    onClick={handleBoard}
+                    className="bg-[#4b4b4b] rounded-full group-hover:opacity-0"
+                  >
+                    {isBoard ? (
+                      <IoIosArrowDropup size={30} />
+                    ) : (
+                      <IoIosArrowDropup size={30} className="rotate-180" />
+                    )}
+                  </button>
+                </div>
+              )}
+              <img
+                className="object-cover w-[45px] md:w-[80px] md:rounded-sm"
+                src={
+                  song
+                    ? song.image_url
+                    : "https://i.iheart.com/v3/url/aHR0cCUzQSUyRiUyRmltYWdlLmloZWFydC5jb20lMkZpaHItaW5nZXN0aW9uLXBpcGVsaW5lLXByb2R1Y3Rpb24ta2RtJTJGS0RNMjAyMzEyMTUxMjQwMjQlMkY4ODA5ODkwODg5NzMxJTJGcmVzb3VyY2VzJTJGMWU0NjFlOGFmZTI1MWE0YTNmOGVjYWVmN2JiNWExNGYuanBn?ops=fit(480,480)"
+                }
+                alt={song ? song.title : "song_lightr"}
+              />
+            </div>
             <audio
               ref={audioRef}
               src={song ? song.ipfs_url : undefined}

@@ -5,7 +5,7 @@ export const Nav = () => {
         <h3 className="hidden md:block"></h3>
         <div className="flex flex-row-reverse md:flex-row gap-2 items-center">
           <p>connect</p>
-          <div className="w-[30px] md:w-[50px]">
+          <div className="w-[30px] md:w-[40px]">
             <img
               className="w-full h-full object-fill rounded-full"
               src="https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg"
