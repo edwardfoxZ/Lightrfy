@@ -132,13 +132,13 @@ export const PlayerSong = ({
 
   const handleBoard = () => {
     if (isBoard) {
-      setIsBoard(false);
+      setIsBoard(!isBoard);
     }
   };
 
-  useEffect(() => {
-    console.log("isBoard state changed:", isBoard);
-  }, [isBoard]);
+  // useEffect(() => {
+  //   console.log("isBoard state changed:", isBoard);
+  // }, [isBoard]);
   return (
     <div className="fixed w-full bottom-[70px] md:bottom-3 bg-[#8f364e] rounded-md md:bg-transparent z-50">
       <div className="relative flex flex-row items-center justify-between py-3 px-5">
@@ -213,21 +213,23 @@ export const PlayerSong = ({
             <h4 className="absolute left-[-40px] top-1 font-medium text-sm text-[#8f364e]">{`${Math.floor(
               currentTime / 60
             )}:${String(Math.floor(currentTime % 60)).padStart(2, "0")}`}</h4>
-            <input
-              id="musicRange"
-              type="range"
-              className="peer w-[650px] h-1 md:h-1.5 bg-[#c4647e] md:bg-gray-300 rounded-lg appearance-none
-                 cursor-pointer thumb-on-hover"
-              min="0"
-              max="100"
-              value={valueSong}
-              onChange={(e) => handleSeek(Number(e.target.value))}
-            />
-            <div
-              ref={progressSongRef}
-              className="absolute bottom-[18px] left-0 h-1 md:h-1.5 bg-white/50 md:bg-[#8f364e] rounded-lg pointer-events-none 
+            <div>
+              <div
+                ref={progressSongRef}
+                className="absolute top-[12px] z-10 left-0 h-1 md:h-1.5 bg-white/50 md:bg-[#8f364e] rounded-lg pointer-events-none 
                     transition-colors duration-300 peer-hover:block"
-            ></div>
+              ></div>
+              <input
+                id="musicRange"
+                type="range"
+                className="relative peer w-[650px] h-1 md:h-1.5 bg-[#c4647e] md:bg-gray-300 rounded-lg appearance-none
+                 cursor-pointer thumb-on-hover"
+                min="0"
+                max="100"
+                value={valueSong}
+                onChange={(e) => handleSeek(Number(e.target.value))}
+              />
+            </div>
           </div>
         </div>
 

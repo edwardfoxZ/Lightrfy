@@ -15,10 +15,6 @@ const Songs = () => {
   const [isMute, setIsMute] = useState(false);
   const { isBoard } = useBoard();
 
-  useEffect(() => {
-    console.log("isBoard state changed:", isBoard);
-  }, [isBoard]);
-
   interface Song {
     ipfs_url: string;
     image_url: string;
