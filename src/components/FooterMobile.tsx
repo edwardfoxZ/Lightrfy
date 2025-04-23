@@ -1,10 +1,5 @@
-import { RiHome9Line, RiHome9Fill } from "react-icons/ri";
-import {
-  IoSearch,
-  IoSearchSharp,
-  IoLibraryOutline,
-  IoAdd,
-} from "react-icons/io5";
+import { RiHome9Line } from "react-icons/ri";
+import { IoSearch, IoLibraryOutline, IoAdd } from "react-icons/io5";
 
 const Bars = [
   { id: 1, icon: <RiHome9Line size={25} />, title: "Your Block" },

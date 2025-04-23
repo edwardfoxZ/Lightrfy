@@ -1,19 +1,19 @@
 import Library from "../components/Library";
 import { Footer } from "../components/FooterMobile";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Search } from "../components/Search";
 import { PlayerSong } from "../components/PlayerSong";
 import { FaPlay, FaPause } from "react-icons/fa";
 import Metadata from "../../server/metadata.json";
 import { SongBoard } from "../components/SongBoard";
-import { useBoard } from "../hooks/setBoard";
+// import { useBoard } from "../hooks/setBoard";
 
 const Songs = () => {
   const [isSearchOpen, setIsSearchOpend] = useState(false);
   const [isLibraryOn, setIsLibraryOn] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
   const [isMute, setIsMute] = useState(false);
-  const { isBoard } = useBoard();
+  // const { isBoard } = useBoard();
 
   interface Song {
     ipfs_url: string;

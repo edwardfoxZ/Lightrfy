@@ -9,7 +9,7 @@ import { useAppKit } from "@reown/appkit/react";
 
 export const Join = () => {
   const [isEmailOpened, setIsEmailOpened] = useState(false);
-  const { open, close } = useAppKit();
+  const { open } = useAppKit();
 
   return (
     <div className="max-w-[1270px] max-sm:px-10 py-32 mx-auto">
