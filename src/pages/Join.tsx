@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import joinP from "../assets/Join/winter-drive-large.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaWallet } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -142,7 +141,11 @@ export const Join = () => {
                 duration: 1.5,
                 ease: "easeInOut",
               }}
-              src={isEmailOpened ? joinP : emailSubmission}
+              src={
+                isEmailOpened
+                  ? "https://i.postimg.cc/XYJX2J4M/winter-drive-large.jpg"
+                  : emailSubmission
+              }
               alt="join_P"
               className="w-full h-full object-cover max-sm:rounded-t-xl md:rounded-tr-xl md:rounded-br-xl"
             />

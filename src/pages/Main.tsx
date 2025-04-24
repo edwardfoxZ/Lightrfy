@@ -1,5 +1,3 @@
-import mainP from "../assets/main/man-in-plane-near-porthole-large.png";
-import headphoneIcon from "../assets/main/headphoneIcon.png";
 import visuallizer from "../assets/main/visualizer-unscreen.gif";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -35,7 +33,7 @@ export const Main = () => {
         className="absolute top-[350px] left-[250px] md:left-[300px]"
       >
         <img
-          src={headphoneIcon}
+          src="https://i.postimg.cc/0QfsRY0V/headphone-Icon.png"
           alt="headphone_Icon"
           className="w-[120px] md:w-[200px]"
         />
@@ -58,7 +56,11 @@ export const Main = () => {
         transition={{ duration: 0.3, ease: "backInOut" }}
         className="absolute md:w-[700px] bottom-0 right-0 z-[-1]"
       >
-        <img src={mainP} alt="main_P" className="w-full h-full object-cover" />
+        <img
+          src="https://i.postimg.cc/5y2MxXPb/man-in-plane-near-porthole-large.png"
+          alt="main_P"
+          className="w-full h-full object-cover"
+        />
       </motion.div>
     </div>
   );

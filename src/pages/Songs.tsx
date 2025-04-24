@@ -7,7 +7,7 @@ import { FaPlay, FaPause } from "react-icons/fa";
 import Metadata from "../../server/metadata.json";
 import { SongBoard } from "../components/SongBoard";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, A11y } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
 import React from "react";
 import "../../node_modules/swiper/swiper.css";
 // import { useBoard } from "../hooks/setBoard";
