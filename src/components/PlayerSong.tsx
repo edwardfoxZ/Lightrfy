@@ -149,7 +149,7 @@ export const PlayerSong = ({
                 <div className="absolute top-0 right-0 text-white/70">
                   <button
                     onClick={handleBoard}
-                    className="bg-[#4b4b4b] rounded-full group-hover:opacity-0"
+                    className="hidden md:block bg-[#4b4b4b] rounded-full group-hover:opacity-0"
                   >
                     {isBoard ? (
                       <IoIosArrowDropup size={30} />
@@ -216,7 +216,7 @@ export const PlayerSong = ({
             <div>
               <div
                 ref={progressSongRef}
-                className="absolute top-[12px] z-10 left-0 h-1 md:h-1.5 bg-white/50 md:bg-[#8f364e] rounded-lg pointer-events-none 
+                className="absolute top-[14px] md:top-[12px] z-10 left-0 h-1 md:h-1.5 bg-white/50 md:bg-[#8f364e] rounded-lg pointer-events-none 
                     transition-colors duration-300 peer-hover:block"
               ></div>
               <input

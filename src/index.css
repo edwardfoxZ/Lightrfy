@@ -11,6 +11,14 @@ body,
   height: 100%;
 }
 
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 h1 {
   @apply text-5xl md:text-7xl text-[#8f364e];
 }
