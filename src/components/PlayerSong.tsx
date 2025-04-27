@@ -3,7 +3,8 @@ import { FaPlay, FaPause } from "react-icons/fa";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { VscUnmute, VscMute } from "react-icons/vsc";
 import { IoMdAddCircleOutline, IoIosArrowDropup } from "react-icons/io";
-import { useBoard } from "../hooks/setBoard";
+import { SongRangeInterface } from "./SongRangeInterface";
+import { SongRange } from "./SongRange";
 
 export const PlayerSong = ({
   isPlay,
@@ -11,6 +12,9 @@ export const PlayerSong = ({
   isMute,
   setIsMute,
   song,
+  isBoard,
+  setIsBoard,
+  setMobileSong,
 }: any) => {
   const [valueSong, setValueSong] = useState(60);
   const progressSongRef = useRef<HTMLDivElement>(null);
@@ -21,7 +25,6 @@ export const PlayerSong = ({
   const [currentTime, setCurrentTime] = useState(0);
   const [_, setSound] = useState(0);
   const [lastVolume, setLastVolume] = useState(100);
-  const { setIsBoard, isBoard } = useBoard();
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -136,29 +139,25 @@ export const PlayerSong = ({
     }
   };
 
-  // useEffect(() => {
-  //   console.log("isBoard state changed:", isBoard);
-  // }, [isBoard]);
+  // For opening the song board
+  const mobileClick = () => {
+    if (window.innerWidth <= 760 && song) {
+      setMobileSong(true);
+      console.log("Mobile song board opened!");
+    } else {
+      setMobileSong(false);
+    }
+  };
+
   return (
-    <div className="fixed w-full bottom-[70px] md:bottom-3 bg-[#8f364e] rounded-md md:bg-transparent z-50">
+    <div
+      className="fixed w-full bottom-[70px] md:bottom-3 bg-[#8f364e] rounded-md md:bg-transparent 
+      z-40"
+    >
       <div className="relative flex flex-row items-center justify-between py-3 px-5">
-        <div className="flex flex-row">
+        <div onClick={mobileClick} className="flex flex-row cursor-pointer">
           <div className="flex flex-row space-x-3 items-center">
-            <div className="relative hover:bg-black/60">
-              {song && (
-                <div className="absolute top-0 right-0 text-white/70">
-                  <button
-                    onClick={handleBoard}
-                    className="hidden md:block bg-[#4b4b4b] rounded-full group-hover:opacity-0"
-                  >
-                    {isBoard ? (
-                      <IoIosArrowDropup size={30} />
-                    ) : (
-                      <IoIosArrowDropup size={30} className="rotate-180" />
-                    )}
-                  </button>
-                </div>
-              )}
+            <div className="relative group hover:bg-black/60 w-fit">
               <img
                 className="object-cover w-[45px] md:w-[80px] md:rounded-sm"
                 src={
@@ -168,6 +167,30 @@ export const PlayerSong = ({
                 }
                 alt={song ? song.title : "song_lightr"}
               />
+              {song && (
+                <div
+                  className="absolute top-0 right-0 text-white/70 opacity-0 group-hover:opacity-100
+                    transition-opacity duration-200"
+                >
+                  <button
+                    onClick={handleBoard}
+                    className="hidden md:block bg-[#4b4b4b] rounded-full"
+                  >
+                    {isBoard ? (
+                      <IoIosArrowDropup
+                        size={30}
+                        onClick={() => setIsBoard(false)}
+                      />
+                    ) : (
+                      <IoIosArrowDropup
+                        size={30}
+                        className="rotate-180"
+                        onClick={() => setIsBoard(true)}
+                      />
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
             <audio
               ref={audioRef}
@@ -197,7 +220,7 @@ export const PlayerSong = ({
             </button>
             <button
               onClick={() => setIsPlay(!isPlay)}
-              className="md:bg-white md:p-3 md:rounded-full max-sm:translate-x-8"
+              className="md:bg-white md:p-3 md:rounded-full max-sm:translate-x-8 z-40"
             >
               {isPlay ? <FaPause size={20} /> : <FaPlay size={20} />}
             </button>
@@ -213,21 +236,23 @@ export const PlayerSong = ({
             <h4 className="absolute left-[-40px] top-1 font-medium text-sm text-[#8f364e]">{`${Math.floor(
               currentTime / 60
             )}:${String(Math.floor(currentTime % 60)).padStart(2, "0")}`}</h4>
-            <div>
+            <div className="hidden md:block">
               <div
                 ref={progressSongRef}
-                className="absolute top-[14px] md:top-[12px] z-10 left-0 h-1 md:h-1.5 bg-white/50 md:bg-[#8f364e] rounded-lg pointer-events-none 
-                    transition-colors duration-300 peer-hover:block"
+                className="absolute top-[2px] z-10 left-0 h-1.5 bg-[#8f364e] rounded-lg pointer-events-none
+                     transition-colors duration-300 peer-hover:block"
               ></div>
-              <input
-                id="musicRange"
-                type="range"
-                className="relative peer w-[650px] h-1 md:h-1.5 bg-[#c4647e] md:bg-gray-300 rounded-lg appearance-none
-                 cursor-pointer thumb-on-hover"
-                min="0"
-                max="100"
-                value={valueSong}
-                onChange={(e) => handleSeek(Number(e.target.value))}
+              <SongRange handleSeek={handleSeek} valueSong={valueSong} />
+            </div>
+            <div className="md:hidden">
+              <div
+                ref={progressSongRef}
+                className="absolute top-[14px] md:top-[12px] z-10 left-0 h-1 md:h-1.5 bg-white/50 
+                    md:bg-[#8f364e] rounded-lg pointer-events-none transition-colors duration-300 peer-hover:block"
+              ></div>
+              <SongRangeInterface
+                valueSong={valueSong}
+                handleSeek={handleSeek}
               />
             </div>
           </div>

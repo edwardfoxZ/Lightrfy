@@ -10,14 +10,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import React from "react";
 import "../../node_modules/swiper/swiper.css";
-// import { useBoard } from "../hooks/setBoard";
+import { useBoard } from "../hooks/setBoard";
+import { useMobileBoard } from "../hooks/setMobileBoard";
+import { SongBoardMobile } from "./mobile/SongBoardMobile";
 
 const Songs = () => {
   const [isSearchOpen, setIsSearchOpend] = useState(false);
   const [isLibraryOn, setIsLibraryOn] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
   const [isMute, setIsMute] = useState(false);
-  // const { isBoard } = useBoard();
+  const { isBoard, setIsBoard } = useBoard();
+  const { mobileSong, setMobileSong } = useMobileBoard();
 
   interface Song {
     ipfs_url: string;
@@ -109,6 +112,19 @@ const Songs = () => {
       <div className="flex flex-row gap-3 w-full h-full">
         {/* library */}
         <Library isLibraryOn={isLibraryOn} setIsLibraryOn={setIsLibraryOn} />
+        {mobileSong && (
+          <div className="fixed inset-0 z-50">
+            <SongBoardMobile
+              artist={artist}
+              image={song?.image_url}
+              name={song?.title}
+              mobileSong={mobileSong}
+              setMobileSong={setMobileSong}
+              isPlay={isPlay}
+              setIsPlay={setIsPlay}
+            />
+          </div>
+        )}
 
         <div
           className="max-sm:max-w-[1260px] w-full h-full mx-auto bg-gray-950/20 backdrop-blur-lg 
@@ -156,13 +172,15 @@ const Songs = () => {
 
         {/* Song Board */}
 
-        <div className="hidden md:block px-10 py-32 bg-[#151215] rounded-xl">
-          <SongBoard
-            artist={artist}
-            image={song?.image_url}
-            name={song?.title}
-          />
-        </div>
+        {isBoard && (
+          <div className="hidden md:block px-10 py-32 bg-[#151215] rounded-xl">
+            <SongBoard
+              artist={artist}
+              image={song?.image_url}
+              name={song?.title}
+            />
+          </div>
+        )}
       </div>
       <PlayerSong
         isPlay={isPlay}
@@ -170,6 +188,9 @@ const Songs = () => {
         isMute={isMute}
         setIsMute={setIsMute}
         song={song}
+        isBoard={isBoard}
+        setIsBoard={setIsBoard}
+        setMobileSong={setMobileSong}
       />
       <Footer />
     </div>

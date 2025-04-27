@@ -18,18 +18,25 @@ export const Nav = () => {
     setShowDisconnectConfirm(false);
   };
 
+  const profileStatus = () => {
+    if (address) {
+      open();
+    }
+  };
+
   return (
     <div className="relative w-full mx-auto">
       <div className="w-full flex flex-row md:justify-between items-center px-3 md:px-10 pt-2 text-white">
         <h3 className="hidden md:block"></h3>
         <div className="flex flex-row-reverse md:flex-row gap-2 items-center">
-          <button onClick={handleDisconnect}>
+          <button onClick={handleDisconnect} className="text-xs md:text-lg">
             {isConnected ? "disconnect" : "connect"}
           </button>
           {address && <p className="text-xs">{address.slice(0, 6)}...</p>}
           <div className="w-[30px] md:w-[40px]">
             <img
-              className="w-full h-full object-fill rounded-full"
+              onClick={profileStatus}
+              className="w-full h-full object-fill rounded-full cursor-pointer"
               src="https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg"
               alt="Profile"
             />
