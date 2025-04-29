@@ -18,6 +18,7 @@ export const PlayerSong = ({
 }: any) => {
   const [valueSong, setValueSong] = useState(60);
   const progressSongRef = useRef<HTMLDivElement>(null);
+  const progressSongRefMobile = useRef<HTMLDivElement>(null);
 
   const [valueSound, setValueSound] = useState(100);
   const progressSoundRef = useRef<HTMLDivElement>(null);
@@ -104,14 +105,19 @@ export const PlayerSong = ({
     }
   }, [isMute]);
 
-  // Ui of ranges
+  // Ui of song ranges
   useEffect(() => {
     const percent = (valueSong / 100) * 100;
     if (progressSongRef.current) {
       progressSongRef.current.style.width = `${percent}%`;
     }
+
+    if (progressSongRefMobile.current) {
+      progressSongRefMobile.current.style.width = `${percent}%`;
+    }
   }, [valueSong]);
 
+  // Ui of sound range
   useEffect(() => {
     const percent = (valueSound / 100) * 100;
     if (progressSoundRef.current) {
@@ -237,16 +243,21 @@ export const PlayerSong = ({
               currentTime / 60
             )}:${String(Math.floor(currentTime % 60)).padStart(2, "0")}`}</h4>
             <div className="hidden md:block">
+              <SongRange
+                className={`relative peer w-[650px] h-1 md:h-1.5 bg-gray-300 rounded-lg appearance-none
+                  cursor-pointer thumb-on-hover`}
+                handleSeek={handleSeek}
+                valueSong={valueSong}
+              />
               <div
                 ref={progressSongRef}
-                className="absolute top-[2px] z-10 left-0 h-1.5 bg-[#8f364e] rounded-lg pointer-events-none
-                     transition-colors duration-300 peer-hover:block"
+                className="absolute top-[12px] h-1.5 bg-[#8f364e] rounded-lg pointer-events-none
+                         transition-colors duration-300 peer-hover:block"
               ></div>
-              <SongRange handleSeek={handleSeek} valueSong={valueSong} />
             </div>
             <div className="md:hidden">
               <div
-                ref={progressSongRef}
+                ref={progressSongRefMobile}
                 className="absolute top-[14px] md:top-[12px] z-10 left-0 h-1 md:h-1.5 bg-white/50 
                     md:bg-[#8f364e] rounded-lg pointer-events-none transition-colors duration-300 peer-hover:block"
               ></div>

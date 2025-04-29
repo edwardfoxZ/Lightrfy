@@ -1,11 +1,10 @@
-export const SongRange = ({ valueSong, handleSeek }: any) => {
+export const SongRange = ({ valueSong, handleSeek, className }: any) => {
   return (
     <>
       <input
         id="musicRange"
         type="range"
-        className="relative peer w-[650px] h-1 md:h-1.5 bg-gray-300 rounded-lg appearance-none
-              cursor-pointer thumb-on-hover"
+        className={className}
         min="0"
         max="100"
         value={valueSong}

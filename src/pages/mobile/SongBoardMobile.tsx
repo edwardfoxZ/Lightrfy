@@ -37,12 +37,13 @@ export const SongBoardMobile = ({
           <p className="text-white text-3xl">{name}</p>
           <p className="text-white/50 ml-1">{artist}</p>
         </div>
-      </div>{" "}
+      </div>
+
       <div className="flex flex-row items-center justify-center space-x-5 mt-10">
         <button>
           <MdSkipPrevious size={30} className="text-white/60" />
         </button>
-        <button onClick={() => setIsPlay(!isPlay)} className="">
+        <button onClick={() => setIsPlay(!isPlay)} className="text-white/50">
           {isPlay ? <FaPause size={20} /> : <FaPlay size={20} />}
         </button>
         <button>
