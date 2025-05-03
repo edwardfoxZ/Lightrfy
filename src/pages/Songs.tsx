@@ -1,6 +1,6 @@
 import Library from "../components/Library";
 import { Footer } from "../components/FooterMobile";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { Search } from "../components/Search";
 import { PlayerSong } from "../components/PlayerSong";
 import { FaPlay, FaPause } from "react-icons/fa";
@@ -14,6 +14,12 @@ import { useBoard } from "../hooks/setBoard";
 import { useMobileBoard } from "../hooks/setMobileBoard";
 import { SongBoardMobile } from "./mobile/SongBoardMobile";
 
+interface Song {
+  ipfs_url: string;
+  image_url: string;
+  title: string;
+}
+
 const Songs = () => {
   const [isSearchOpen, setIsSearchOpend] = useState(false);
   const [isLibraryOn, setIsLibraryOn] = useState(false);
@@ -21,15 +27,72 @@ const Songs = () => {
   const [isMute, setIsMute] = useState(false);
   const { isBoard, setIsBoard } = useBoard();
   const { mobileSong, setMobileSong } = useMobileBoard();
-
-  interface Song {
-    ipfs_url: string;
-    image_url: string;
-    title: string;
-  }
-
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [song, setSong] = useState<Song | null>(null);
   const [artist, setArtist] = useState<Song | null>(null);
+  const [valueSong, setValueSong] = useState(60);
+  const progressSongRef = useRef<HTMLDivElement>(null);
+  const progressSongRefMobile = useRef<HTMLDivElement>(null);
+  const [valueSound, setValueSound] = useState(100);
+  const progressSoundRef = useRef<HTMLDivElement>(null);
+  const [_, setSound] = useState(0);
+  const [lastVolume, setLastVolume] = useState(100);
+  const [currentSong, setCurrnetSong] = useState<Song | null>(null);
+
+  // Audio playback control
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const onLoadedMetaData = () => {
+      setDuration(audio?.duration || 0);
+    };
+
+    const onTimeUpdata = () => {
+      if (audio.duration && !isNaN(audio.currentTime) && audio.duration > 0) {
+        setCurrentTime(audio.currentTime);
+        const percent = (audio.currentTime / audio.duration) * 100;
+        if (!isNaN(percent)) {
+          setValueSong(percent);
+        }
+      }
+    };
+
+    const onError = (e: Event) => {
+      console.error("Audio Error: ", e);
+    };
+
+    audio.addEventListener("loadedmetadata", onLoadedMetaData);
+    audio.addEventListener("timeupdate", onTimeUpdata);
+    audio.addEventListener("error", onError);
+
+    return () => {
+      audio.removeEventListener("loadedmetadata", onLoadedMetaData);
+      audio.removeEventListener("timeupdate", onTimeUpdata);
+      audio.removeEventListener("error", onError);
+    };
+  }, []);
+
+  // Handle Seek
+  const handleSeek = (value: number) => {
+    const audio = audioRef.current;
+    if (audio && duration > 0 && !isNaN(value) && value >= 0 && value <= 100) {
+      const seekTime = (value / 100) * duration;
+      if (!isNaN(seekTime)) {
+        audio.currentTime = seekTime;
+        setCurrentTime(seekTime);
+        setValueSong(value);
+      }
+    }
+  };
+
+  // useEffect(() => {
+  //   if (audioRef.current) {
+  //     setSound(audioRef.current.volume);
+  //   }
+  // }, [valueSong]);
 
   function togglePlaySong(data: any) {
     if (song?.ipfs_url === data.ipfs_url && isPlay) {
@@ -55,6 +118,7 @@ const Songs = () => {
                 transition-colors duration-300 flex items-center justify-center"
             >
               <button
+                type="button"
                 onClick={() => togglePlaySong(data)}
                 className="hidden md:block absolute bottom-5 right-3 opacity-0 group-hover:opacity-100 bg-[#8f364e]
                      text-white p-3 md:p-4 rounded-full transition-opacity duration-300"
@@ -85,6 +149,7 @@ const Songs = () => {
                 rounded-xl transition-colors duration-300 flex items-center justify-center"
             >
               <button
+                type="button"
                 onClick={() => togglePlaySong(data)}
                 className="absolute bottom-5 right-3 opacity-0 group-hover:opacity-100 bg-[#8f364e] text-white p-3 
                     rounded-full transition-opacity duration-300"
@@ -109,6 +174,11 @@ const Songs = () => {
 
   return (
     <div className="w-full h-full md:p-3 md:pb-48 pt-5">
+      <audio
+        ref={audioRef}
+        src={song ? song.ipfs_url : undefined}
+        preload="auto"
+      />
       <div className="flex flex-row gap-3 w-full h-full">
         {/* library */}
         <Library isLibraryOn={isLibraryOn} setIsLibraryOn={setIsLibraryOn} />
@@ -122,6 +192,10 @@ const Songs = () => {
               setMobileSong={setMobileSong}
               isPlay={isPlay}
               setIsPlay={setIsPlay}
+              currentTime={currentTime}
+              duration={duration}
+              handleSeek={handleSeek}
+              progressSongRef={progressSongRef}
             />
           </div>
         )}
@@ -191,6 +265,17 @@ const Songs = () => {
         isBoard={isBoard}
         setIsBoard={setIsBoard}
         setMobileSong={setMobileSong}
+        setLastVolume={setLastVolume}
+        lastVolume={lastVolume}
+        setValueSound={setValueSound}
+        valueSound={valueSound}
+        valueSong={valueSong}
+        audioRef={audioRef}
+        progressSongRefMobile={progressSongRefMobile}
+        progressSongRef={progressSongRef}
+        progressSoundRef={progressSoundRef}
+        currentTime={currentTime}
+        handleSeek={handleSeek}
       />
       <Footer />
     </div>

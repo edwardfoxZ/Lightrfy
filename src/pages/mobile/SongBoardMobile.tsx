@@ -15,7 +15,12 @@ export const SongBoardMobile = ({
   setMobileSong,
   isPlay,
   setIsPlay,
+  currentTime,
+  duration,
+  handleSeek,
+  progressSongRef,
 }: any) => {
+  const valueSong = duration > 0 ? (currentTime / duration) * 100 : 0;
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -50,8 +55,17 @@ export const SongBoardMobile = ({
           <MdSkipNext size={30} className="text-white/60" />
         </button>
       </div>
-      <div>
-        <SongRange />
+      <div className="max-w-[330px] relative mx-auto">
+        <div
+          ref={progressSongRef}
+          className="absolute top-[16px] h-0.5 bg-[#8f364e] rounded-lg pointer-events-none
+                         transition-colors duration-300 peer-hover:block"
+        ></div>
+        <SongRange
+          valueSong={valueSong}
+          handleSeek={handleSeek}
+          className="w-full h-0.5 peer appearance-none accent-[#8f364e] bg-[#d3d3d3]"
+        />
       </div>
     </motion.div>
   );

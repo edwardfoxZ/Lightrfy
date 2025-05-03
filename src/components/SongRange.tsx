@@ -1,4 +1,16 @@
-export const SongRange = ({ valueSong, handleSeek, className }: any) => {
+export const SongRange = ({
+  valueSong,
+  handleSeek,
+  className,
+}: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const value = Number(e.target.value);
+    if (!isNaN(value) && value >= 0 && value <= 100) {
+      handleSeek(value);
+    }
+  };
+
   return (
     <>
       <input
@@ -7,8 +19,8 @@ export const SongRange = ({ valueSong, handleSeek, className }: any) => {
         className={className}
         min="0"
         max="100"
-        value={valueSong}
-        onChange={(e) => handleSeek(Number(e.target.value))}
+        value={valueSong || 0}
+        onChange={handleChange}
       />
     </>
   );

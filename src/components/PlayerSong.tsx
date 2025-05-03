@@ -15,64 +15,18 @@ export const PlayerSong = ({
   isBoard,
   setIsBoard,
   setMobileSong,
+  setLastVolume,
+  lastVolume,
+  setValueSound,
+  valueSound,
+  valueSong,
+  audioRef,
+  progressSongRefMobile,
+  progressSongRef,
+  progressSoundRef,
+  currentTime,
+  handleSeek,
 }: any) => {
-  const [valueSong, setValueSong] = useState(60);
-  const progressSongRef = useRef<HTMLDivElement>(null);
-  const progressSongRefMobile = useRef<HTMLDivElement>(null);
-
-  const [valueSound, setValueSound] = useState(100);
-  const progressSoundRef = useRef<HTMLDivElement>(null);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [_, setSound] = useState(0);
-  const [lastVolume, setLastVolume] = useState(100);
-
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  // Set ranges in useEffects
-  useEffect(() => {
-    if (!song) return;
-
-    const audio = audioRef.current;
-
-    if (!audio) return;
-
-    const onLoadedMetaData = () => {
-      setDuration(audio?.duration || 0);
-    };
-
-    const onTimeUpdata = () => {
-      if (audio) {
-        setCurrentTime(audio.currentTime);
-        const percent = (audio.currentTime / audio.duration) * 100;
-        setValueSong(percent || 0);
-      }
-    };
-
-    audio?.addEventListener("loadedmetadata", onLoadedMetaData);
-    audio?.addEventListener("timeupdate", onTimeUpdata);
-
-    return () => {
-      audio?.removeEventListener("loadedmetadata", onLoadedMetaData);
-      audio?.removeEventListener("timeupdate", onTimeUpdata);
-    };
-  }, [song]);
-
-  const handleSeek = (value: number) => {
-    const audio = audioRef.current;
-    if (audio && duration) {
-      const seekTime = (value / 100) * duration;
-      audio.currentTime = seekTime;
-    }
-    setValueSong(value);
-  };
-
-  useEffect(() => {
-    if (audioRef.current) {
-      setSound(audioRef.current.volume);
-    }
-  }, [valueSong]);
-
   const handleSound = (value: number) => {
     const volume = value / 100;
 
@@ -120,7 +74,7 @@ export const PlayerSong = ({
   // Ui of sound range
   useEffect(() => {
     const percent = (valueSound / 100) * 100;
-    if (progressSoundRef.current) {
+    if (progressSoundRef.current && !isNaN(progressSongRef.current.volume)) {
       progressSoundRef.current.style.width = `${percent}%`;
     }
   }, [valueSound]);
@@ -131,7 +85,7 @@ export const PlayerSong = ({
     }
 
     if (isPlay) {
-      audioRef.current?.play().catch((err) => {
+      audioRef.current?.play().catch((err: Error) => {
         console.log(err.message);
       });
     } else {
@@ -198,12 +152,6 @@ export const PlayerSong = ({
                 </div>
               )}
             </div>
-            <audio
-              ref={audioRef}
-              src={song ? song.ipfs_url : undefined}
-              preload="auto"
-            />
-
             <div className="-space-y-1 md:-space-y-0">
               <h2 className="text-white/70 font-bold">
                 {song ? song.title : "..."}
