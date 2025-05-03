@@ -39,7 +39,7 @@ const Songs = () => {
   const progressSoundRef = useRef<HTMLDivElement>(null);
   const [_, setSound] = useState(0);
   const [lastVolume, setLastVolume] = useState(100);
-  const [currentSong, setCurrnetSong] = useState<Song | null>(null);
+  // const [currentSong, setCurrnetSong] = useState<Song | null>(null);
 
   // Audio playback control
   useEffect(() => {
@@ -88,11 +88,11 @@ const Songs = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (audioRef.current) {
-  //     setSound(audioRef.current.volume);
-  //   }
-  // }, [valueSong]);
+  useEffect(() => {
+    if (audioRef.current) {
+      setSound(audioRef.current.volume);
+    }
+  }, [valueSong]);
 
   function togglePlaySong(data: any) {
     if (song?.ipfs_url === data.ipfs_url && isPlay) {
